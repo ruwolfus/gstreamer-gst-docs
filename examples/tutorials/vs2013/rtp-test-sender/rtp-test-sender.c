@@ -1,7 +1,7 @@
 #include <gst/gst.h>
 
 /* GLOBAL SETTINGS */
-//#define INSERTBREAKS //pause the pipline frequently and rise the frequence in steps
+#define INSERTBREAKS //pause the pipline frequently and rise the frequence in steps
 #define RTPAUDIOSINK //output is RTP otherwise local speaker
 //#define AUDIOSOURCE //input is audiotestsrc
 #define URISOURCE //input is uridecodebin
@@ -13,7 +13,7 @@
 #define STARTFREQUENCY 220.0f
 #ifdef RTPAUDIOSINK
 #define CONFIGLOCALBINDPORT 16000
-#define CONFIGEXTPORT 2042
+#define CONFIGEXTPORT 2032
 #define CONFIGEXTHOST "192.168.252.12"
 #define SSRC 1
 #endif
@@ -164,9 +164,13 @@ int main(int argc, char *argv[]) {
 	} GstAudioVisualizerShader;
 	"shade-amount": DEFAULT_SHADE_AMOUNT 0x000a0a0a other:0x00040302 0x00080402
 	*/
+#ifdef INSERTBREAKS
 	g_object_set(data.visual, "style", 3, NULL);
-	g_object_set(data.visual, "shader", 6, NULL);
-	g_object_set(data.visual, "shade-amount", 0x00080402, NULL);
+#else
+	g_object_set(data.visual, "style", 3, NULL);
+	//g_object_set(data.visual, "shader", 6, NULL);
+	//g_object_set(data.visual, "shade-amount", 0x00080402, NULL);
+#endif
 	g_object_set(data.volume, "volume", OUTVOLUME, NULL);
 #ifdef URISOURCE
 	/* Set the URI to play */
